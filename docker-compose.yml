@@ -1,18 +1,12 @@
 version: '3.8'
-
 services:
-    cmusicai:
+    cmusicai-build:
+        image: cmusicai-build
+        container_name: cmusicai-build
         build:
             context: .
             dockerfile: Dockerfile.build
-        image: cmusicai:latest
-        container_name: cmusicai_node
         volumes:
-            - cmusicai_data:/home/cmusicai/.cmusicai
-        ports:
-            - "9819:9819"
-            - "9328:9328"
-        restart: unless-stopped
-
-volumes:
-    cmusicai_data:
+            - .:/root/Cmusic
+            - ./entrypoint.sh:/root/entrypoint.sh
+        entrypoint: /bin/bash -c "/root/entrypoint.sh"
